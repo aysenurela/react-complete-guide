@@ -28,7 +28,7 @@ class App extends Component {
       persons:[
         {name:"Max", age:28},
         {name:event.target.value , age:29},
-        {name:"Steph", age:26}
+        {name:"Steph", age:25}
       ] 
     }) 
   }
