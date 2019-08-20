@@ -5,22 +5,12 @@ import Person from './Person/Person'
 class App extends Component {
   state = {
     persons: [
-      { name: 'Max', age: 28 },
-      { name: 'Manu', age: 29 },
-      { name: 'Steph', age: 26 }
+      { id: "asd", name: 'Max', age: 28 },
+      { id: "as", name: 'Manu', age: 29 },
+      { id: "d", name: 'Steph', age: 26 }
     ],
     otherStateSth: 'some value',
     showPersons: false
-  }
-
-  switchNameHandler = newName => {
-    this.setState({
-      persons: [
-        { name: newName, age: 28 },
-        { name: 'Manu', age: 29 },
-        { name: 'Steph', age: 27 }
-      ]
-    })
   }
 
   nameChangedHandler = event => {
@@ -31,6 +21,13 @@ class App extends Component {
         { name: 'Steph', age: 26 }
       ]
     })
+  }
+
+  deletePersonHandler = (personIndex) => {
+    // const persons = this.state.persons.slice() // to copy array
+    const persons = [...this.state.persons]
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons })
   }
 
   // bind method is more efficient than the arrow syntax
@@ -57,22 +54,13 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-          />
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            click={this.switchNameHandler.bind(this, 'Max!')}
-            changed={this.nameChangedHandler}
-          >
-            My hobbies: Racing{' '}
-          </Person>
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age}
-          />
+          {this.state.persons.map((person, index) => {
+            return <Person
+              key={person.id}
+              click={() => this.deletePersonHandler(index)}
+              name={person.name}
+              age={person.age} />
+          })}
         </div>
       )
     }
