@@ -40,7 +40,9 @@ class App extends Component {
     this.setState({ showPersons: !showNames })
   }
 
-  render () {
+  render() {
+    //Normal JS code here, not JSX 
+
     const style = {
       backgroundColor: 'white',
       font: 'inherit',
@@ -50,31 +52,37 @@ class App extends Component {
       margin: '10px'
     }
 
-    return (
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+          />
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+            click={this.switchNameHandler.bind(this, 'Max!')}
+            changed={this.nameChangedHandler}
+          >
+            My hobbies: Racing{' '}
+          </Person>
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age}
+          />
+        </div>
+      )
+    }
+
+    return ( //JSX is only here 
       <div className='App'>
         <button style={style} onClick={this.togglePersonsHandler}>
           Switch Name
         </button>
-        {this.state.showPersons ? ( // React.createElement() work behind scenes
-          <div>
-            <Person
-              name={this.state.persons[0].name}
-              age={this.state.persons[0].age}
-            />
-            <Person
-              name={this.state.persons[1].name}
-              age={this.state.persons[1].age}
-              click={this.switchNameHandler.bind(this, 'Max!')}
-              changed={this.nameChangedHandler}
-            >
-              My hobbies: Racing{' '}
-            </Person>
-            <Person
-              name={this.state.persons[2].name}
-              age={this.state.persons[2].age}
-            />
-          </div>
-        ) : null}
+        {persons}
       </div>
     )
   }
